@@ -1,0 +1,345 @@
+:root {
+  /* CONCEPT - Paleta Preto Nobre & Grafite */
+  --bg-app: #07080a;
+  --bg-sidebar: #0b0e14;
+  --bg-card: #10141b;
+  --bg-card-hover: #161c26;
+  --bg-elevated: #1a212e;
+  --bg-input: #0b0e13;
+
+  --border-subtle: #1f2735;
+  --border-medium: #2a3447;
+  --border-gold: rgba(212, 175, 55, 0.35);
+
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --text-faint: #64748b;
+  --text-inverse: #020617;
+
+  /* Dourado Metálico Nobre da CONCEPT */
+  --gold-primary: #d4af37;
+  --gold-light: #f5d77f;
+  --gold-dark: #9e751d;
+  --gold-gradient: linear-gradient(135deg, #f5d77f 0%, #d4af37 50%, #9e751d 100%);
+  --gold-glow: rgba(212, 175, 55, 0.25);
+  --gold-bg: rgba(212, 175, 55, 0.1);
+  --gold-border: rgba(212, 175, 55, 0.3);
+
+  /* Status de Retenção & Performance */
+  --status-active-color: #10b981;
+  --status-active-bg: rgba(16, 185, 129, 0.1);
+  --status-active-border: rgba(16, 185, 129, 0.25);
+
+  --status-monitor-color: #f59e0b;
+  --status-monitor-bg: rgba(245, 158, 11, 0.1);
+  --status-monitor-border: rgba(245, 158, 11, 0.25);
+
+  --status-alert-color: #f43f5e;
+  --status-alert-bg: rgba(244, 63, 94, 0.12);
+  --status-alert-border: rgba(244, 63, 94, 0.3);
+
+  /* Brand Primary (Acento Dourado com equilíbrio) */
+  --brand-primary: #d4af37;
+  --brand-primary-hover: #e5c05b;
+  --brand-glow: rgba(212, 175, 55, 0.2);
+
+  /* WhatsApp Brand */
+  --wa-brand: #25d366;
+  --wa-hover: #20bd5a;
+  --wa-bg: rgba(37, 211, 102, 0.12);
+
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+
+  --shadow-subtle: 0 4px 20px -2px rgba(0, 0, 0, 0.6);
+  --shadow-gold: 0 0 25px -5px rgba(212, 175, 55, 0.2);
+  --shadow-modal: 0 20px 45px -10px rgba(0, 0, 0, 0.85);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-app);
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.5;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-app);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-medium);
+  border-radius: var(--radius-full);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gold-primary);
+}
+
+/* Base Layout */
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+  position: relative;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  background-color: var(--bg-app);
+}
+
+.content-body {
+  padding: 2rem 2.5rem;
+  max-width: 1440px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+@media (max-width: 1024px) {
+  .content-body {
+    padding: 1.5rem 1.25rem;
+  }
+}
+
+/* Typography Helpers */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-main);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+p {
+  color: var(--text-muted);
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  padding: 0.625rem 1.125rem;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid transparent;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+/* Botão Principal CONCEPT - Dourado Nobre */
+.btn-primary {
+  background: var(--gold-gradient);
+  color: #120e03;
+  font-weight: 800;
+  box-shadow: 0 2px 14px rgba(212, 175, 55, 0.35);
+  border: 1px solid rgba(245, 215, 127, 0.4);
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #fae29f 0%, #dfbd4b 50%, #b88a24 100%);
+  box-shadow: 0 4px 20px rgba(212, 175, 55, 0.5);
+  color: #000000;
+}
+
+.btn-secondary {
+  background-color: var(--bg-elevated);
+  color: var(--text-main);
+  border-color: var(--border-subtle);
+}
+
+.btn-secondary:hover {
+  background-color: var(--bg-card-hover);
+  border-color: var(--border-medium);
+  color: #ffffff;
+}
+
+.btn-whatsapp {
+  background-color: var(--wa-brand);
+  color: #03240e;
+  font-weight: 700;
+}
+
+.btn-whatsapp:hover {
+  background-color: var(--wa-hover);
+  color: #ffffff;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-muted);
+}
+
+.btn-ghost:hover {
+  background: var(--bg-elevated);
+  color: var(--text-main);
+}
+
+.btn-sm {
+  padding: 0.4rem 0.75rem;
+  font-size: 0.8125rem;
+  border-radius: var(--radius-sm);
+}
+
+/* Badges */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.625rem;
+  border-radius: var(--radius-full);
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+
+.badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.badge-active {
+  background: var(--status-active-bg);
+  color: var(--status-active-color);
+  border-color: var(--status-active-border);
+}
+.badge-active .badge-dot {
+  background: var(--status-active-color);
+  box-shadow: 0 0 8px var(--status-active-color);
+}
+
+.badge-monitoring {
+  background: var(--status-monitor-bg);
+  color: var(--status-monitor-color);
+  border-color: var(--status-monitor-border);
+}
+.badge-monitoring .badge-dot {
+  background: var(--status-monitor-color);
+  box-shadow: 0 0 8px var(--status-monitor-color);
+}
+
+.badge-attention {
+  background: var(--status-alert-bg);
+  color: var(--status-alert-color);
+  border-color: var(--status-alert-border);
+}
+.badge-attention .badge-dot {
+  background: var(--status-alert-color);
+  box-shadow: 0 0 8px var(--status-alert-color);
+  animation: pulse-dot 1.8s infinite;
+}
+
+.badge-gold {
+  background: var(--gold-bg);
+  color: var(--gold-light);
+  border-color: var(--gold-border);
+}
+.badge-gold .badge-dot {
+  background: var(--gold-primary);
+  box-shadow: 0 0 8px var(--gold-primary);
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
+}
+
+/* Form inputs */
+.input-text {
+  background: var(--bg-input);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 0.625rem 1rem;
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  transition: all 0.2s ease;
+  width: 100%;
+}
+
+.input-text:focus {
+  outline: none;
+  border-color: var(--gold-primary);
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.18);
+}
+
+.input-text::placeholder {
+  color: var(--text-faint);
+}
+
+/* Modals */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(4, 5, 8, 0.82);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 1.25rem;
+  animation: modal-fade 0.2s ease-out;
+}
+
+.modal-content {
+  background: var(--bg-card);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-modal);
+  width: 100%;
+  max-width: 520px;
+  overflow: hidden;
+  animation: modal-zoom 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+@keyframes modal-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes modal-zoom {
+  from { opacity: 0; transform: scale(0.95) translateY(8px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* Utility animations */
+.fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
