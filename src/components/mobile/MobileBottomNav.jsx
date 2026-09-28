@@ -15,16 +15,19 @@ export default function MobileBottomNav({ currentRoute, onNavigate }) {
       bottom: 0,
       left: 0,
       right: 0,
-      height: '68px',
-      backgroundColor: 'rgba(13, 16, 21, 0.95)',
+      width: '100%',
+      minHeight: '64px',
+      backgroundColor: 'rgba(13, 16, 21, 0.96)',
       backdropFilter: 'blur(16px)',
       borderTop: '1px solid var(--border-subtle)',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-around',
       zIndex: 50,
-      padding: '0 0.5rem',
-      userSelect: 'none'
+      padding: '0.375rem 0.5rem',
+      paddingBottom: 'max(0.5rem, env(safe-area-inset-bottom, 0px))',
+      userSelect: 'none',
+      boxSizing: 'border-box'
     }}>
       {tabs.map((tab) => {
         const Icon = tab.icon;

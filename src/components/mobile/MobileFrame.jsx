@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Smartphone, Monitor, ArrowLeft, Wifi, Battery } from 'lucide-react';
 
 export default function MobileFrame({ 
@@ -13,7 +13,7 @@ export default function MobileFrame({
     typeof window !== 'undefined' ? window.innerWidth <= 768 : false
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     const handleResize = () => {
       setIsMobileScreen(window.innerWidth <= 768);
     };
@@ -24,43 +24,36 @@ export default function MobileFrame({
   const isFullView = isMobileScreen || deviceView === 'fullscreen';
 
   return (
-    <div style={{
-      minHeight: '100vh',
-      backgroundColor: deviceView === 'phone' ? '#06080b' : 'var(--bg-app)',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      position: 'relative'
-    }}>
-      {/* Barra de utilidades do modo Desktop (facilita apresentação comercial e troca de aluno) */}
-      <div style={{
-        width: '100%',
-        backgroundColor: '#0c0f14',
-        borderBottom: '1px solid var(--border-subtle)',
-        padding: '0.625rem 1.25rem',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        flexWrap: 'wrap',
-        gap: '0.75rem',
-        zIndex: 60
-      }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-          <button
-            onClick={onNavigateBackToAdmin}
-            className="btn btn-secondary btn-sm"
-            style={{ display: 'inline-flex', alignItems: 'center', gap: '0.375rem', fontSize: '0.75rem' }}
-            id="btn-back-to-admin"
-          >
-            <ArrowLeft size={14} />
-            <span>Voltar ao Painel da Academia</span>
-          </button>
+    <div className="mobile-app-wrapper">
+      {/* Barra de utilidades: no desktop permite alternar modos e alunos; no mobile é super compacta */}
+      {(onNavigateBackToAdmin || (students.length > 0 && onSelectStudent)) && (
+        <div className="mobile-top-bar">
+          <div className="mobile-top-bar-left">
+            {onNavigateBackToAdmin && (
+              <button
+                onClick={onNavigateBackToAdmin}
+                className="btn btn-secondary btn-sm"
+                style={{ 
+                  display: 'inline-flex', 
+                  alignItems: 'center', 
+                  gap: '0.375rem', 
+                  fontSize: '0.75rem',
+                  padding: '0.35rem 0.65rem',
+                  flexShrink: 0
+                }}
+                id="btn-back-to-admin"
+              >
+                <ArrowLeft size={14} />
+                <span className="btn-back-text">Voltar ao Painel</span>
+                <span className="btn-back-short-text">Painel</span>
+              </button>
+            )}
 
           {/* Seletor de Aluno Ativo */}
           {students.length > 0 && onSelectStudent && (
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <span style={{ fontSize: '0.75rem', color: 'var(--text-faint)' }}>
-                Visualizando como:
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.375rem', minWidth: 0, flex: 1, justifyContent: 'flex-end' }}>
+              <span className="btn-back-text" style={{ fontSize: '0.75rem', color: 'var(--text-faint)', whiteSpace: 'nowrap' }}>
+                Aluno:
               </span>
               <select
                 value={activeStudentId || ''}
@@ -70,11 +63,15 @@ export default function MobileFrame({
                   color: 'var(--gold-light)',
                   border: '1px solid var(--gold-border)',
                   borderRadius: 'var(--radius-sm)',
-                  padding: '0.25rem 0.6rem',
+                  padding: '0.25rem 0.5rem',
                   fontSize: '0.75rem',
                   fontWeight: 700,
                   outline: 'none',
-                  cursor: 'pointer'
+                  cursor: 'pointer',
+                  maxWidth: isMobileScreen ? '180px' : '260px',
+                  textOverflow: 'ellipsis',
+                  whiteSpace: 'nowrap',
+                  overflow: 'hidden'
                 }}
                 id="select-active-student"
               >
@@ -88,7 +85,8 @@ export default function MobileFrame({
           )}
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+        {/* Seletores de modo: exibidos apenas no Desktop */}
+        <div className="mobile-top-bar-modes">
           <span style={{ fontSize: '0.75rem', color: 'var(--text-faint)' }}>
             Modo:
           </span>
@@ -105,7 +103,8 @@ export default function MobileFrame({
               cursor: 'pointer',
               display: 'inline-flex',
               alignItems: 'center',
-              gap: '0.3rem'
+              gap: '0.3rem',
+              transition: 'all 0.2s ease'
             }}
           >
             <Smartphone size={13} />
@@ -125,7 +124,8 @@ export default function MobileFrame({
               cursor: 'pointer',
               display: 'inline-flex',
               alignItems: 'center',
-              gap: '0.3rem'
+              gap: '0.3rem',
+              transition: 'all 0.2s ease'
             }}
           >
             <Monitor size={13} />
@@ -133,68 +133,32 @@ export default function MobileFrame({
           </button>
         </div>
       </div>
+      )}
 
-      {/* Conteúdo Mobile */}
-      <div style={{
-        flex: 1,
-        width: '100%',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: !isFullView ? 'center' : 'stretch',
-        padding: !isFullView ? '1.5rem 0.5rem' : '0'
-      }}>
-        <div style={{
-          width: '100%',
-          maxWidth: !isFullView ? '410px' : '100%',
-          minHeight: !isFullView ? '820px' : '100vh',
-          maxHeight: !isFullView ? '880px' : 'none',
-          backgroundColor: '#090c10',
-          borderRadius: !isFullView ? '44px' : '0',
-          border: !isFullView ? '10px solid #1a202c' : 'none',
-          boxShadow: !isFullView ? '0 25px 60px -15px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,255,255,0.08)' : 'none',
-          overflow: 'hidden',
-          display: 'flex',
-          flexDirection: 'column',
-          position: 'relative'
-        }}>
-          {/* Status Bar Mobile nativa */}
-          <div style={{
-            height: '38px',
-            backgroundColor: 'transparent',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            padding: '0 1.25rem',
-            fontSize: '0.6875rem',
-            fontWeight: 700,
-            color: 'var(--text-main)',
-            userSelect: 'none',
-            flexShrink: 0,
-            zIndex: 40
-          }}>
-            <span>18:42</span>
-            {/* Dynamic Island simulada */}
-            <div style={{
-              width: '84px',
-              height: '18px',
-              backgroundColor: '#000000',
-              borderRadius: 'var(--radius-full)',
-              border: '1px solid rgba(255,255,255,0.05)'
-            }} />
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.375rem' }}>
-              <Wifi size={12} />
-              <Battery size={13} />
+      {/* Palco centralizador do dispositivo */}
+      <div className="mobile-frame-stage">
+        <div className={`mobile-frame-device ${isFullView && !isMobileScreen ? 'mobile-frame-fullscreen' : ''}`}>
+          
+          {/* Status Bar simulada (exibida apenas no modo mockup desktop) */}
+          {!isFullView && (
+            <div className="mobile-status-bar">
+              <span>18:42</span>
+              <div style={{
+                width: '84px',
+                height: '18px',
+                backgroundColor: '#000000',
+                borderRadius: 'var(--radius-full)',
+                border: '1px solid rgba(255,255,255,0.06)'
+              }} />
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.375rem' }}>
+                <Wifi size={12} />
+                <Battery size={13} />
+              </div>
             </div>
-          </div>
+          )}
 
-          {/* Área com Scroll do App */}
-          <div style={{
-            flex: 1,
-            overflowY: 'auto',
-            display: 'flex',
-            flexDirection: 'column',
-            position: 'relative'
-          }}>
+          {/* Área interna rolável com o App CONCEPT */}
+          <div className="mobile-scroll-content">
             {children}
           </div>
         </div>
@@ -202,3 +166,4 @@ export default function MobileFrame({
     </div>
   );
 }
+
